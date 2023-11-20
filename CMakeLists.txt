@@ -11,13 +11,17 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(main src/main.cpp)
+target_sources(main PUBLIC src/ResourceManager.cpp)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_link_libraries(main PRIVATE sfml-audio)
 target_link_libraries(main PRIVATE sfml-network)
 target_link_libraries(main PRIVATE sfml-window)
 target_link_libraries(main PRIVATE sfml-system)
 
+target_include_directories(main PRIVATE ${CMAKE_BINARY_DIR}/../include)
+
 target_compile_features(main PRIVATE cxx_std_17)
+target_compile_definitions( main PUBLIC LOG_LEVEL=${LOG_LEVEL} )
 
 if(WIN32)
     add_custom_command(
