@@ -28,6 +28,14 @@ int main()
     sf::Sprite sprite(*tex.lock().get());
     sprite.setScale(sf::Vector2f(0.5, 0.5));
 
+    std::weak_ptr<sf::Font> font;
+    Utils::ResourceManager::getInstance().getFont("DotGothic16-Regular.ttf", font);
+    sf::Text myText;
+    myText.setFont(*font.lock());
+    myText.setString("Hello World!");
+    myText.setCharacterSize(30);
+    myText.setFillColor(sf::Color::White);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -40,6 +48,7 @@ int main()
         window.clear();
         window.draw(shape);
         window.draw(sprite);
+        window.draw(myText);
         window.display();
     }
 

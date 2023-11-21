@@ -17,9 +17,17 @@
 
 namespace Utils
 {
+/**
+ * @brief Singleton class for logging errors to file (or if file handling fails, console)
+ */
 class ErrorLogger
 {
   public:
+    /**
+     * @brief Gets the instance of the ErrorLogger singleton
+     *
+     * @return ErrorLogger& a reference to the singleton
+     */
     static ErrorLogger& getInstance()
     {
         static ErrorLogger _instance;
@@ -27,6 +35,12 @@ class ErrorLogger
         return _instance;
     }
 
+    /**
+     * @brief logs the given string with a timestamp that looks like "Mon Nov 20
+     * 23:28:22 2023"
+     *
+     * @param logString the string to log
+     */
     void log(const std::string& logString)
     {
         auto currentTime = std::chrono::system_clock::now();
@@ -47,6 +61,12 @@ class ErrorLogger
     }
 
   private:
+    /**
+     * @brief Private constructor for the singleton design
+     *
+     * @param filename optional param to set the logfile name, defaults to
+     * "output.log"
+     */
     ErrorLogger(std::string filename = "output.log")
         : m_filename(filename), m_file(), m_canWriteToFile(false)
     {
@@ -59,6 +79,11 @@ class ErrorLogger
         m_canWriteToFile = true;
         m_file.close();
     }
+
+    /**
+     * @brief Private destructor for singleton pattern. Ensures that internal
+     * files are closed
+     */
     ~ErrorLogger()
     {
         if (m_file.is_open())
@@ -66,12 +91,21 @@ class ErrorLogger
             m_file.close();
         }
     }
+
+    /**
+     * @brief Deleted copy constructor, should not copy singleton
+     */
     ErrorLogger(const ErrorLogger& other) = delete;
+
+    /**
+     * @brief Deleted assignment operator, should not try to assign singleton
+     */
     void operator=(const ErrorLogger& rhs) = delete;
 
-    std::string m_filename;
-    std::fstream m_file;
-    bool m_canWriteToFile;
+    std::string m_filename; //!< logfile name
+    std::fstream m_file;    //!< internal file object
+    bool m_canWriteToFile;  //!< true if there has been no issue opening the
+                            //!< file, false if there has been
 };
 
 } // namespace Utils
@@ -91,7 +125,7 @@ class ErrorLogger
     }
 #else
 #define TRACE(message) ;
-#endif
+#endif // LOG_LEVEL <= 1
 
 #if LOG_LEVEL <= 2
 /**
@@ -107,7 +141,7 @@ class ErrorLogger
     }
 #else
 #define DEBUG(message) ;
-#endif
+#endif // LOG_LEVEL <= 2
 
 #if LOG_LEVEL <= 3
 /**
@@ -124,7 +158,7 @@ class ErrorLogger
     }
 #else
 #define WARN(message) ;
-#endif
+#endif // LOG_LEVEL <= 3
 
 #if LOG_LEVEL <= 4
 /**
@@ -141,7 +175,7 @@ class ErrorLogger
     }
 #else
 #define ERROR(message) ;
-#endif
+#endif // LOG_LEVEL <= 4
 
 /**
  * @brief Logs at any log level. Use when code execution cannot continue
