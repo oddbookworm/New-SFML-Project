@@ -13,8 +13,7 @@ ResourceManager& ResourceManager::getInstance()
     return _instance;
 }
 
-bool ResourceManager::getTexture(const std::string& filename,
-                                 WeakTexPtr& texturePtr)
+bool ResourceManager::getTexture(const std::string& filename, WeakTexPtr& texturePtr)
 {
     if (!mapHasKey(m_textures, filename))
     {
@@ -30,8 +29,7 @@ bool ResourceManager::getTexture(const std::string& filename,
     return true;
 }
 
-bool ResourceManager::getSound(const std::string& filename,
-                               WeakSndPtr& soundPtr)
+bool ResourceManager::getSound(const std::string& filename, WeakSndPtr& soundPtr)
 {
     if (!mapHasKey(m_sounds, filename))
     {
@@ -75,11 +73,9 @@ bool ResourceManager::loadTextureFromFile(const std::string& filename)
         return false;
     }
 
-    if (!m_textures.emplace(filename, std::make_shared<sf::Texture>(tex))
-             .second)
+    if (!m_textures.emplace(filename, std::make_shared<sf::Texture>(tex)).second)
     {
-        std::string errMsg =
-            "Failed to insert Texture into map for filename: " + filename;
+        std::string errMsg = "Failed to insert Texture into map for filename: " + filename;
         ERROR(errMsg);
         return false;
     }
@@ -92,17 +88,14 @@ bool ResourceManager::loadSoundFromFile(const std::string& filename)
     sf::SoundBuffer sndBuf;
     if (!sndBuf.loadFromFile(filename))
     {
-        std::string errMsg =
-            "Failed to load SoundBuffer from file: " + filename;
+        std::string errMsg = "Failed to load SoundBuffer from file: " + filename;
         ERROR(errMsg);
         return false;
     }
 
-    if (!m_sounds.emplace(filename, std::make_shared<sf::SoundBuffer>(sndBuf))
-             .second)
+    if (!m_sounds.emplace(filename, std::make_shared<sf::SoundBuffer>(sndBuf)).second)
     {
-        std::string errMsg =
-            "Failed to insert SoundBuffer into map for filename: " + filename;
+        std::string errMsg = "Failed to insert SoundBuffer into map for filename: " + filename;
         ERROR(errMsg);
         return false;
     }
@@ -120,11 +113,9 @@ bool ResourceManager::loadFontFromFile(const std::string& filename)
         return false;
     }
 
-    if (!m_fonts.emplace(filename, std::make_shared<sf::Font>(font))
-             .second)
+    if (!m_fonts.emplace(filename, std::make_shared<sf::Font>(font)).second)
     {
-        std::string errMsg =
-            "Failed to insert Font into map for filename: " + filename;
+        std::string errMsg = "Failed to insert Font into map for filename: " + filename;
         ERROR(errMsg);
         return false;
     }

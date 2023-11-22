@@ -1,0 +1,10 @@
+@startuml UIElement
+class UIElement
+{
+    +UIElement()
+    +{virtual} draw(sf::RenderTarget* target) : void
+    +{virtual} update() : void
+    -m_texture : Utils::WeakTexPtr
+    -m_sprite : sf::Sprite
+}
+@enduml

@@ -8,11 +8,12 @@
 #include <string.h>
 
 /**
- * TRACE == 1
- * DEBUG == 2
- * WARN == 3
- * ERROR == 4
- * FATAL == 5
+ * LOG_LEVELS
+ * TRACE >= 1
+ * DEBUG >= 2
+ * WARN >= 3
+ * ERROR >= 4
+ * FATAL *always*
  */
 
 namespace Utils
@@ -110,6 +111,10 @@ class ErrorLogger
 
 } // namespace Utils
 
+#define COMMON_ENDING(message)                                                                     \
+    std::string("\t\t") + std::string(message) + ": " + __FILE__ + "[" +                           \
+        std::to_string(__LINE__) + "]"
+
 #if LOG_LEVEL <= 1
 /**
  * @brief Logs at log level 1 or below. Use to trace a path through code
@@ -117,11 +122,10 @@ class ErrorLogger
  *
  * @param message must be able to convert to std::string
  */
-#define TRACE(message)                                                         \
-    {                                                                          \
-        std::string output = "[TRACE]\t\t" + std::string(message) + ": " +     \
-                             __FILE__ + "[" + std::to_string(__LINE__) + "]";  \
-        Utils::ErrorLogger::getInstance().log(output);                         \
+#define TRACE(message)                                                                             \
+    {                                                                                              \
+        std::string output = "[TRACE]" + COMMON_ENDING(message);                                   \
+        Utils::ErrorLogger::getInstance().log(output);                                             \
     }
 #else
 #define TRACE(message) ;
@@ -133,11 +137,10 @@ class ErrorLogger
  *
  * @param message must be able to convert to std::string
  */
-#define DEBUG(message)                                                         \
-    {                                                                          \
-        std::string output = "[DEBUG]\t\t" + std::string(message) + ": " +     \
-                             __FILE__ + "[" + std::to_string(__LINE__) + "]";  \
-        Utils::ErrorLogger::getInstance().log(output);                         \
+#define DEBUG(message)                                                                             \
+    {                                                                                              \
+        std::string output = "[DEBUG]" + COMMON_ENDING(message);                                   \
+        Utils::ErrorLogger::getInstance().log(output);                                             \
     }
 #else
 #define DEBUG(message) ;
@@ -150,11 +153,10 @@ class ErrorLogger
  *
  * @param message must be able to convert to std::string
  */
-#define WARN(message)                                                          \
-    {                                                                          \
-        std::string output = "[WARN]\t\t" + std::string(message) + ": " +      \
-                             __FILE__ + "[" + std::to_string(__LINE__) + "]";  \
-        Utils::ErrorLogger::getInstance().log(output);                         \
+#define WARN(message)                                                                              \
+    {                                                                                              \
+        std::string output = "[WARN]" + COMMON_ENDING(message);                                    \
+        Utils::ErrorLogger::getInstance().log(output);                                             \
     }
 #else
 #define WARN(message) ;
@@ -167,11 +169,10 @@ class ErrorLogger
  *
  * @param message must be able to convert to std::string
  */
-#define ERROR(message)                                                         \
-    {                                                                          \
-        std::string output = "[ERROR]\t\t" + std::string(message) + ": " +     \
-                             __FILE__ + "[" + std::to_string(__LINE__) + "]";  \
-        Utils::ErrorLogger::getInstance().log(output);                         \
+#define ERROR(message)                                                                             \
+    {                                                                                              \
+        std::string output = "[ERROR]" + COMMON_ENDING(message);                                   \
+        Utils::ErrorLogger::getInstance().log(output);                                             \
     }
 #else
 #define ERROR(message) ;
@@ -182,11 +183,10 @@ class ErrorLogger
  *
  * @param message must be able to convert to std::string
  */
-#define FATAL(message)                                                         \
-    {                                                                          \
-        std::string output = "[FATAL]\t\t" + std::string(message) + ": " +     \
-                             __FILE__ + "[" + std::to_string(__LINE__) + "]";  \
-        Utils::ErrorLogger::getInstance().log(output);                         \
+#define FATAL(message)                                                                             \
+    {                                                                                              \
+        std::string output = "[FATAL]" + COMMON_ENDING(message);                                   \
+        Utils::ErrorLogger::getInstance().log(output);                                             \
     }
 
 #endif // ERRORLOGGER_H

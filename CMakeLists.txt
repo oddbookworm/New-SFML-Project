@@ -11,7 +11,11 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(main src/main.cpp)
-target_sources(main PUBLIC src/ResourceManager.cpp)
+target_sources(main PUBLIC 
+    src/ResourceManager.cpp 
+    src/UI.cpp
+    src/UIElement.cpp
+)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_link_libraries(main PRIVATE sfml-audio)
 target_link_libraries(main PRIVATE sfml-network)
