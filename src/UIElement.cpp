@@ -5,6 +5,6 @@
 namespace Interface
 {
 
-UIElement::UIElement() : m_texturePtr(), m_sprite() { std::cout << "UIElement created\n"; }
+UIElement::UIElement() : m_texturePtr(), m_sprite() {}
 
 } // namespace Interface

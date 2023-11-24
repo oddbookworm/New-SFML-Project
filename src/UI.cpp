@@ -3,7 +3,9 @@
 
 namespace Interface
 {
-UI::UI() { std::cout << "UI created\n"; }
+UI::UI() {}
+
+std::vector<UIElement*> UI::getElementVector() const { return m_elements; }
 
 void UI::pushElement(UIElement* element) { m_elements.push_back(element); }
 } // namespace Interface
