@@ -19,8 +19,6 @@ int main()
     Interface::UIElement element2;
 
     Interface::UI ui;
-    ui.pushElement(&element1);
-    ui.pushElement(&element2);
 
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::CircleShape shape(100.f);

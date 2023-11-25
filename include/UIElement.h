@@ -10,21 +10,56 @@ namespace Interface
 class UIElement
 {
   public:
+    /**
+     * @brief Construct a new UIElement object
+     */
     UIElement();
 
-  private:
     /**
-     * @brief Disallow copy
+     * @brief Destructs the UIElement
      */
-    UIElement(const UIElement& other) = delete;
+    virtual ~UIElement();
 
     /**
-     * @brief Disallow assignment
+     * @brief Handles the events passed in
+     *
+     * @param events a vector of events to process
      */
-    void operator=(const UIElement& rhs) = delete;
+    virtual void handleEvents(const std::vector<sf::Event>& events);
+
+    /**
+     * @brief Updates the UIElement
+     */
+    virtual void update();
+
+    /**
+     * @brief Set whether UIElement is visible or not
+     *
+     * @param visible True if visible, false otherwise
+     */
+    void setVisible(bool visible);
+
+    /**
+     * @brief Draws the UIElement
+     *
+     * @param target the target to draw onto
+     */
+    virtual void draw(sf::RenderTarget& target) const;
+
+  private:
+    // /**
+    //  * @brief Disallow copy
+    //  */
+    // UIElement(const UIElement& other) = delete;
+
+    // /**
+    //  * @brief Disallow assignment
+    //  */
+    // void operator=(const UIElement& rhs) = delete;
 
     Utils::WeakTexPtr m_texturePtr; //!< weak pointer to the Texture for the sprite
     sf::Sprite m_sprite;            //!< sprite for drawing
+    bool m_visible;                 //!< True if to be drawn, false otherwise
 };
 } // namespace Interface
 

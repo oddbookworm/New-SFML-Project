@@ -50,6 +50,12 @@ if(WIN32)
         VERBATIM)
 endif()
 
+if(MSVC)
+  target_compile_options(main PRIVATE /W4 /WX)
+else()
+  target_compile_options(main PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+
 # gtest_suite executable
 enable_testing()
 add_executable(gtest_suite EXCLUDE_FROM_ALL test/main.cpp)
@@ -80,6 +86,12 @@ if(WIN32)
         COMMENT "Copy OpenAL DLL"
         PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:main>
         VERBATIM)
+endif()
+
+if(MSVC)
+  target_compile_options(gtest_suite PRIVATE /W4 /WX)
+else()
+  target_compile_options(gtest_suite PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 
 install(TARGETS main)
