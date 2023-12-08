@@ -9,22 +9,26 @@ option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(NOT DEFINED LOG_LEVEL)
+    message(STATUS "Setting Log Level to 3")
+    set(LOG_LEVEL 3)
+endif(NOT DEFINED LOG_LEVEL)
+
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
-)
+FetchContent_Declare(googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG f8d7d77c06936315286eb55f8de22cd23c188571)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # main executable
+# =================
 add_executable(main src/main.cpp)
 target_sources(main PUBLIC 
     src/ResourceManager.cpp 
@@ -55,8 +59,10 @@ if(MSVC)
 else()
   target_compile_options(main PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
+# =================
 
 # gtest_suite executable
+# =================
 enable_testing()
 add_executable(gtest_suite EXCLUDE_FROM_ALL test/main.cpp)
 target_sources(gtest_suite PUBLIC 
@@ -93,5 +99,6 @@ if(MSVC)
 else()
   target_compile_options(gtest_suite PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
+# =================
 
 install(TARGETS main)
